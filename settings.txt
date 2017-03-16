@@ -1,0 +1,5 @@
+cameraHeight 0
+targetHeight 0
+pMax 480
+vFOV 38.243
+maxAngle 30
