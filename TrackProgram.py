@@ -1,9 +1,11 @@
 from nwtConnection import nwtConnection
 from GearTracker import GearTracker
+from HookTracker import HookTracker
 from Settings import Settings
 
 nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
 gt = GearTracker('./templates')
+ht = HookTracker('./hsv_settings.txt')
 s = Settings('./settings.txt')
 
 nwt.find_stream()

@@ -1,4 +1,3 @@
-from Settings import Settings
 import os, cv2, numpy as np, math.ceil
 
 class GearTracker(object):

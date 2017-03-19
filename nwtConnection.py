@@ -5,7 +5,7 @@ class nwtConnection(object):
 
     def __init__(self, roborioAddress, sdTableName, cpTableName):
         
-        self.address = roborioAddress
+        self.address = str(roborioAddress)
         logging.basicConfig(level=logging.DEBUG)
         nwt.initialize(server=roborioAddress)
         self.sd = nwt.getTable(sdTableName)
@@ -13,7 +13,7 @@ class nwtConnection(object):
 
     def find_stream(self):
 
-        print("Connecting to " + str(self.address) + " ...")
+        print("Connecting to " + self.address + " ...")
 
         while nwt.getRemoteAddress() == None:
             time.sleep(1)

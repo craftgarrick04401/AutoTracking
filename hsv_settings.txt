@@ -1,0 +1,6 @@
+lowerH 0
+lowerS 0
+lowerV 0
+higherH 255
+higherS 255
+higherV 255

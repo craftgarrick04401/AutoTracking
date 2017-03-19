@@ -17,7 +17,7 @@ class Settings(object):
 
 if __name__ == '__main__':
 
-    s = Settings('./settings.txt')
+    s = Settings('./hsv_settings.txt')
 
     print(s.dict, '\n')
     s.write()
