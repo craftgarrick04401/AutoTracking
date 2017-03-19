@@ -14,6 +14,13 @@ cv2.createTrackbar('lowerV', 'HSVtrackbars', s.dict['lowerV'], 255, nothing)
 cv2.createTrackbar('higherH', 'HSVtrackbars', s.dict['higherH'], 255, nothing)
 cv2.createTrackbar('higherS', 'HSVtrackbars', s.dict['higherS'], 255, nothing)
 cv2.createTrackbar('higherV', 'HSVtrackbars', s.dict['higherV'], 255, nothing)
+cv2.namedWindow('BGRtrackbars')
+cv2.createTrackbar('lowerB', 'BGRtrackbars', s.dict['lowerB'], 255, nothing)
+cv2.createTrackbar('lowerG', 'BGRtrackbars', s.dict['lowerG'], 255, nothing)
+cv2.createTrackbar('lowerR', 'BGRtrackbars', s.dict['lowerR'], 255, nothing)
+cv2.createTrackbar('higherB', 'BGRtrackbars', s.dict['higherB'], 255, nothing)
+cv2.createTrackbar('higherG', 'BGRtrackbars', s.dict['higherG'], 255, nothing)
+cv2.createTrackbar('higherR', 'BGRtrackbars', s.dict['higherR'], 255, nothing)
 
 nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
 nwt.find_stream()
@@ -33,12 +40,25 @@ while True:
                                 cv2.getTrackbarPos('higherV', 'HSVtrackbars')])
 
     maskHSV = cv2.inRange(hsv, lowerThreshHSV, higherThreshHSV)
-    median = cv2.medianBlur(maskHSV, 5)
-    resHSV = cv2.bitwise_and(frame, frame, mask=median)
+    resHSV = cv2.bitwise_and(frame, frame, mask=maskHSV)
 
-    cv2.imshow('maskHSV', maskHSV)
+    lowerThreshBGR = np.array([cv2.getTrackbarPos('lowerB', 'BGRtrackbars'), \
+                               cv2.getTrackbarPos('lowerG', 'BGRtrackbars'), \
+                               cv2.getTrackbarPos('lowerR', 'BGRtrackbars')])
+    higherThreshBGR = np.array([cv2.getTrackbarPos('higherB', 'BGRtrackbars'), \
+                                cv2.getTrackbarPos('higherG', 'BGRtrackbars'), \
+                                cv2.getTrackbarPos('higherR', 'BGRtrackbars')])
+    
+    maskBGR = cv2.inRange(resHSV, lowerThreshBGR, higherThreshBGR)
+    kernel = np.ones((5,5),np.uint8)
+    opening = cv2.morphologyEx(maskBGR, cv2.MORPH_OPEN, kernel)
+    median = cv2.medianBlur(opening, 5)
+    resBGR = cv2.bitwise_and(resHSV, resHSV, mask=median)
+    
+
     cv2.imshow('frame', frame)
     cv2.imshow('resHSV', resHSV)
+    cv2.imshow('resBGR', resBGR)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
@@ -49,6 +69,12 @@ s.dict['lowerV'] = cv2.getTrackbarPos('lowerV', 'HSVtrackbars')
 s.dict['higherH'] = cv2.getTrackbarPos('higherH', 'HSVtrackbars')
 s.dict['higherS'] = cv2.getTrackbarPos('higherS', 'HSVtrackbars')
 s.dict['higherV'] = cv2.getTrackbarPos('higherV', 'HSVtrackbars')
+s.dict['lowerB'] = cv2.getTrackbarPos('lowerB', 'BGRtrackbars')
+s.dict['lowerG'] = cv2.getTrackbarPos('lowerG', 'BGRtrackbars')
+s.dict['lowerR'] = cv2.getTrackbarPos('lowerR', 'BGRtrackbars')
+s.dict['higherB'] = cv2.getTrackbarPos('higherB', 'BGRtrackbars')
+s.dict['higherG'] = cv2.getTrackbarPos('higherG', 'BGRtrackbars')
+s.dict['higherR'] = cv2.getTrackbarPos('higherR', 'BGRtrackbars')
 
 s.write()
 

@@ -22,8 +22,8 @@ class nwtConnection(object):
 
         for i in range(len(self.cp.getKeys())):
             if self.cp.getKeys()[i] == 'streams':
-                self.streamURL = self.cp.getStringArray(cp.getKeys()[i])[0].split("mjpg:")[1]
-                print("Stream found at " + streamURL)
+                self.streamURL = self.cp.getStringArray(self.cp.getKeys()[i])[0].split("mjpg:")[1]
+                print("Stream found at " + self.streamURL)
                 break
         else:
             print("Could not find stream")

@@ -1,10 +1,10 @@
-from GearTracker import GearTracker
-from Settings import Setings
+from HookTracker import HookTracker
+from Settings import Settings
 from nwtConnection import nwtConnection
 import math, cv2
 
 nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
-gt = GearTracker('./templates')
+ht = HookTracker(Settings('./hsv_settings.txt'), './hook_bitmap.png')
 s = Settings('./settings.txt')
 
 nwt.find_stream()
@@ -17,11 +17,13 @@ while True:
 
     if ret:
 
-        tracking, topLeft, bottomRight, ph = gt.track(frame)
+        tracking, rects, ph, pw = ht.track(frame)
 
         if tracking:
 
-            cv2.rectangle(frame, topLeft, bottomRight, (0,0,255), 3)
+            for i in rects:
+                x,y,w,h = i
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0,0,255), 3)
 
         cv2.imshow('frame', frame)
 
@@ -29,7 +31,7 @@ while True:
         break
 
 if ph == None:
-    print("Gear was not detected.")
+    print("Hook was not detected.")
     os._exit(0)
 
 hdist = float(input("hdist"))

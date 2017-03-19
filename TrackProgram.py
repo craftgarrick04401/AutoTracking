@@ -2,10 +2,11 @@ from nwtConnection import nwtConnection
 from GearTracker import GearTracker
 from HookTracker import HookTracker
 from Settings import Settings
+import math, cv2, numpy as np
 
 nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
-gt = GearTracker('./templates')
-ht = HookTracker('./hsv_settings.txt')
+gt = GearTracker('./templates/')
+ht = HookTracker(Settings('./hsv_settings.txt'), './hook_bitmap.png')
 s = Settings('./settings.txt')
 
 nwt.find_stream()
@@ -18,7 +19,7 @@ while True:
 
     if ret and nwt.sd.getBoolean("Tracking", False):
 
-        if nwt.sd.getString("Tracker", '') == "gear":
+        if nwt.sd.getString("Target", '') == "gear":
 
             tracking, topLeft, bottomRight, ph, pw = gt.track(frame)
 
@@ -33,9 +34,21 @@ while True:
 
                 nwt.sd.putNumber("hdist", -1)
 
-        if nwt.sd.getString("Tracker", '') == "hook":
-            pass
+        if nwt.sd.getString("Target", '') == "hook":
 
+            tracking, rects, ph, pw = ht.track(frame)
+
+            if tracking:
+                
+                hdist = (s.dict['cameraHeight'] - s.dict['tapeHeight']) * math.tan(math.radians(s.dict['maxAngle'] - ph/s.dict['phMax']*s.dict['vFOV']))
+                offset = (pw - s.dict['pwCenter']) / s.dict['pwCenter']
+                nwt.sd.putNumber("hdist", hdist)
+                nwt.sd.putNumber("offset", offset)
+
+            else:
+                
+                nwt.sd.putNumber("hdist", -1)
+                
     else:
 
         nwt.sd.putNumber("hdist", -2)
