@@ -1,5 +1,7 @@
 cameraHeight 0
-targetHeight 0
-pMax 480
-vFOV 38.243
+gearHeight 2
+tapeHeight 0
+phMax 480
+pwCenter 320.0
+vFOV 33.6
 maxAngle 30
