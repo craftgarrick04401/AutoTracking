@@ -3,7 +3,8 @@ from Settings import Setings
 from nwtConnection import nwtConnection
 import math, cv2
 
-nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
+nwt_s = Settings('./nwt_settings.txt', True)
+nwt = nwtConnection(nwt_s.dict['roboRioAddress'], nwt_s.dict['sdTableName'], nwt_s.dict['cpTableName'])
 gt = GearTracker('./templates')
 s = Settings('./settings.txt')
 

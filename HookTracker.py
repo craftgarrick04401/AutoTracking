@@ -54,7 +54,8 @@ class HookTracker(object):
 
 if __name__ == '__main__':
 
-    nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
+    nwt_s = Settings('./nwt_settings.txt')
+    nwt = nwtConnection(nwt_s.dict['roboRioAddress'], nwt_s.dict['sdTableName'], nwt_s.dict['cpTableName'])
     s = Settings('./hsv_settings.txt')
     ss = Settings('./settings.txt')
     ht = HookTracker(s, './hook_bitmap.png')

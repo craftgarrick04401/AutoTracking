@@ -3,7 +3,8 @@ from Settings import Settings
 from nwtConnection import nwtConnection
 import math, cv2
 
-nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
+nwt_s = Settings('./nwt_settings.txt', True)
+nwt = nwtConnection(nwt_s.dict['roboRioAddress'], nwt_s.dict['sdTableName'], nwt_s.dict['cpTableName'])
 ht = HookTracker(Settings('./hsv_settings.txt'), './hook_bitmap.png')
 s = Settings('./settings.txt')
 

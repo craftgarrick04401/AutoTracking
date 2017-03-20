@@ -1,0 +1,3 @@
+roboRioAddress  'roborio-4546-frc.local'
+sdTableName  '/SmartDashboard/'
+cpTableName  '/CameraPublisher/USB Camera 0/'

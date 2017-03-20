@@ -22,7 +22,8 @@ cv2.createTrackbar('higherB', 'BGRtrackbars', s.dict['higherB'], 255, nothing)
 cv2.createTrackbar('higherG', 'BGRtrackbars', s.dict['higherG'], 255, nothing)
 cv2.createTrackbar('higherR', 'BGRtrackbars', s.dict['higherR'], 255, nothing)
 
-nwt = nwtConnection('roborio-4546-frc.local', '/SmartDashboard/', '/CameraPublisher/USB Camera 0/')
+nwt_s = Settings('./nwt_settings.txt', True)
+nwt = nwtConnection(nwt_s.dict['roboRioAddress'], nwt_s.dict['sdTableName'], nwt_s.dict['cpTableName'])
 nwt.find_stream()
 
 cap = cv2.VideoCapture(nwt.streamURL)

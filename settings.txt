@@ -1,8 +1,8 @@
-cameraHeight 22.0
-gearHeight 2
-tapeHeight 0
-phMax 480
-pwCenter 320.0
-vFOV 33.6
-maxAngle 30
-MaxAngle 95.80436695452573
+cameraHeight  22.0
+gearHeight  2
+tapeHeight  0
+phMax  480
+pwCenter  320.0
+vFOV  31.8
+maxAngle  30
+MaxAngle  95.80436695452573
