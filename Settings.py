@@ -24,6 +24,8 @@ if __name__ == '__main__':
 
     s = Settings('./settings.txt')
 
+    s.dict['MaxAngle'] = 0
+    
     print(s.dict, '\n')
     s.write()
     

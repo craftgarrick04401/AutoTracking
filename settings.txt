@@ -4,5 +4,4 @@ tapeHeight  0
 phMax  480
 pwCenter  320.0
 vFOV  31.8
-maxAngle  30
-MaxAngle  95.80436695452573
+MaxAngle  0
